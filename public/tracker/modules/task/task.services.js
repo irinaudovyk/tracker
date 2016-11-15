@@ -110,7 +110,7 @@ angular
                     fields = [fields];
                 }
 
-                return _.orderBy(items, fields, orders);
+                return _.sortByOrder(items, fields, orders);
             }
         }
     })

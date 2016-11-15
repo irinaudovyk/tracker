@@ -10,9 +10,6 @@ angular
                     $scope.activeSortPriority = false;
 
                     var aTasks = [];
-                    _.forEach($scope.tasks, function (aTask) {
-                        aTasks.push(aTask);
-                    });
 
                     $scope.views = [
                         {title: 'Board', name: 'board'},
@@ -63,33 +60,54 @@ angular
                     };
 
                     $scope.sortByPriority = function () {
-                        $scope.tasks.reverse();
+
+                        $scope.sortByDateOrder = 0;
+                        var descTasksPriority = SortingService.sortByOrder($scope.tasks, 'priority', 'desc');
+                        $scope.pushTasksToScope(descTasksPriority);
                         $scope.activeSortPriority = !$scope.activeSortPriority;
+
                     };
 
                     $scope.pushTasksToScope = function (tasks) {
+
                         $scope.tasks.splice(0);
                         _.forEach(tasks, function (task) {
                             $scope.tasks.push(task);
                         })
+
                     };
 
                     $scope.sortByDate = function () {
-
                         if ($scope.sortByDateOrder == 1) {
+
                             var descTasks = SortingService.sortByOrder($scope.tasks, 'updatedAt', 'desc');
                             $scope.pushTasksToScope(descTasks);
+
                         } else if ($scope.sortByDateOrder == 2) {
+
                             var ascTasks = SortingService.sortByOrder($scope.tasks, 'updatedAt', 'asc');
                             $scope.pushTasksToScope(ascTasks);
+
                         } else {
+
                             $scope.pushTasksToScope(aTasks);
+
                         }
                     };
 
-                    $scope.$watchCollection('tasks', function () {
+                    $scope.$watchCollection('tasks', function (tasks) {
+                        if (tasks) {
+                            aTasks = [];
+                            _.forEach($scope.tasks, function (aTask) {
+                                aTasks.push(aTask);
+                            });
+                        }
                         if ($scope.sortByDateOrder !== 0) {
                             $scope.sortByDate();
+                        }
+
+                        if ($scope.sortByDateOrder == 0 && $scope.activeSortPriority) {
+                            $scope.sortByPriority();
                         }
 
                         $scope.tasksList = getTaskLists();

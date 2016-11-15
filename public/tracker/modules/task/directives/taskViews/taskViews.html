@@ -9,7 +9,8 @@
             </button>
         </div>
 
-        <button class="btn btn-default btn-sm btn-metrics" 
+        <button class="btn btn-default btn-sm btn-metrics"
+                ng-disabled="activeSortPriority"
                 uib-tooltip="{{tooltip}}"
                 ng-click="toggleMetrics()"
                 ng-class="{'btn-warning' : metricsDetails == 1,'btn-info' : metricsDetails == 2}">

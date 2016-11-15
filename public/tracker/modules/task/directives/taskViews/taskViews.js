@@ -63,6 +63,7 @@ angular
 
                         $scope.sortByDateOrder = 0;
                         var descTasksPriority = SortingService.sortByOrder($scope.tasks, 'priority', 'desc');
+
                         $scope.pushTasksToScope(descTasksPriority);
                         $scope.activeSortPriority = !$scope.activeSortPriority;
 
